@@ -6,7 +6,7 @@ usage() {
     cat <<'EOF'
 Usage: newlatex -n NAME
 
-Create NAME.tex and its shared macros.tex.
+Create NAME.tex, macros.tex, and bibliogrpahy.bib.
 NAME may include a directory and an optional .tex suffix.
 The filename must start with a letter or digit and contain only letters,
 digits, dots, underscores, or hyphens. Directory names may contain spaces.
@@ -45,7 +45,7 @@ target="$directory/$stem.tex"
 # Resolve the installed symlink so the project remains the template source.
 script_path=$(readlink -f -- "${BASH_SOURCE[0]}")
 template_dir=$(cd -- "$(dirname -- "$script_path")/.." && pwd -P)
-support_files=(macros.tex)
+support_files=(macros.tex bibliogrpahy.bib)
 for file in sample.tex "${support_files[@]}"; do
     [[ -r "$template_dir/$file" ]] || fail "missing template: $template_dir/$file"
 done

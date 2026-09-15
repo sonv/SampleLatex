@@ -1,4 +1,6 @@
 \documentclass[11pt]{amsart}
+\usepackage[backend=biber,style=alphabetic]{biblatex}
+\addbibresource{bibliogrpahy.bib}
 \input{macros.tex}
 % \shownotesfalse % Uncomment to hide all sidenotes.
 
@@ -61,5 +63,9 @@ The shared macros also cover derivatives and vector calculus:
 The displayed identity assumes enough regularity to differentiate under
 the integral. Higher derivatives use \verb|\pdv[2]{u}{x}|, giving
 $\pdv[2]{u}{x}$.
+
+For background on mathematical typesetting, see~\cite{knuth1984}.
+
+\printbibliography
 
 \end{document}

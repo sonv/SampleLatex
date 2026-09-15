@@ -10,8 +10,8 @@ newlatex -n name
 latexmk -pdf name.tex
 ```
 
-This creates just two files: `name.tex` and `macros.tex`. The document loads
-its macros with `\input{macros.tex}`. Send both files to collaborators.
+This creates `name.tex`, `macros.tex`, and `bibliogrpahy.bib`. The document loads
+its macros with `\input{macros.tex}`. Send all three files to collaborators.
 No custom `.sty` files are required or copied.
 
 An optional `.tex` suffix is accepted. To create a separate folder, run
@@ -19,8 +19,8 @@ An optional `.tex` suffix is accepted. To create a separate folder, run
 may contain spaces; quote the full argument. Filenames use letters, digits,
 dots, underscores, and hyphens and start with a letter or digit.
 
-Existing documents are never overwritten. An identical `macros.tex` is
-reused; a different one causes an error before any files are created. After
+Existing documents are never overwritten. Identical macros and bibliography files
+are reused; different ones cause an error before any files are created. After
 customizing a folder's macros, start later documents in a new folder or copy
 its existing document manually to share those customized macros.
 
@@ -30,6 +30,10 @@ its existing document manually to share those customized macros.
   and content to change the starting document.
 - `macros.tex`: standard package imports followed by clearly grouped notes,
   theorem definitions, and notation. Edit each definition directly.
+- `bibliogrpahy.bib`: bibliography entries, including an example reference.
+  Cite entries with `\cite{knuth1984}`. The sample uses `biblatex` with the
+  alphabetic style and Biber backend, and prints references with
+  `\printbibliography`. `latexmk -pdf` runs Biber automatically.
 - `bin/newlatex`: the Bash script. `install.sh` installs a symlink to it in
   `~/.local/bin`. Keep this project in place; if you move it, remove the old
   command symlink and rerun `./install.sh`.
@@ -86,6 +90,6 @@ latexmk -pdf sample.tex
 ```
 
 Requires a standard LaTeX installation with the AMS packages, mathtools,
-xcolor, lineno, and hyperref. This machine's `~/.latexmkrc` puts PDFs in
+xcolor, lineno, hyperref, and biblatex, plus Biber. This machine's `~/.latexmkrc` puts PDFs in
 `build/` and auxiliary files in `aux/`.
 # SampleLatex
