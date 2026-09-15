@@ -1,0 +1,119 @@
+% Load with \input{macros.tex} before \begin{document}.
+% Edit or remove any definition below to suit your paper.
+% Some notation follows Truong-Son Van's GiantCluster macros
+% (originally credited to Gautam Iyer).
+
+% Standard packages; no custom style files are needed.
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{xcolor}
+\usepackage[mathlines]{lineno}
+\usepackage[hidelinks]{hyperref}
+
+% Line numbers: use \linenumbers in the document to enable them,
+% \nolinenumbers to stop, or \modulolinenumbers[5] to label every fifth line.
+
+% Named sidenotes: \sidenote[Son]{Check this argument.}
+% Use \shownotesfalse in the preamble to hide all sidenotes.
+\newif\ifshownotes
+\shownotestrue
+\setlength{\marginparwidth}{1in}
+\setlength{\marginparsep}{10pt}
+\newcommand{\sidenote}[2][Note]{%
+  \ifshownotes
+    \marginpar{\raggedright\footnotesize\color{blue!60!black}%
+      \textbf{#1:} #2}%
+  \fi
+}
+% Optional shortcut for a collaborator (copy and rename as needed):
+% \newcommand{\sonnote}[1]{\sidenote[Son]{#1}}
+
+% Theorem environments and equation numbers, numbered by section.
+\numberwithin{equation}{section}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Number systems.
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\T}{\mathbb{T}}
+
+% Calligraphic letters.
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+
+% Delimiters: \norm{u}, \norm*{...} for automatic sizing,
+% or \norm[\big]{u} for an explicit size. The same applies to the others.
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\paren}{(}{)}
+\DeclarePairedDelimiter{\brak}{[}{]}
+\DeclarePairedDelimiter{\set}{\lbrace}{\rbrace}
+\DeclarePairedDelimiter{\av}{\langle}{\rangle}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiterX{\ip}[2]{\langle}{\rangle}{#1,#2}
+\newcommand{\st}{\mid}
+\newcommand{\given}{\mid}
+
+% Calculus. Optional argument = order of differentiation.
+\newcommand{\dd}{\mathop{}\!\mathrm{d}}
+\newcommand{\D}{\partial}
+\newcommand{\odv}[3][]{\frac{\mathrm{d}^{#1}#2}{\mathrm{d}#3^{#1}}}
+\newcommand{\pdv}[3][]{\frac{\partial^{#1}#2}{\partial #3^{#1}}}
+\newcommand{\grad}{\nabla}
+\newcommand{\dv}{\nabla\cdot}
+\newcommand{\curl}{\nabla\times}
+\newcommand{\lap}{\Delta}
+
+% Probability. Use \Prob so the standard \P symbol remains available.
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\one}{\mathbf{1}}
+\DeclareMathOperator{\var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+% Common operators.
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\Lip}{Lip}
+\DeclareMathOperator*{\esssup}{ess\,sup}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% Miscellaneous notation.
+\newcommand{\eps}{\varepsilon}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\weakto}{\rightharpoonup}
+\newcommand{\weakstar}{\overset{\ast}{\rightharpoonup}}
+
+% Add notation specific to your document below this line.

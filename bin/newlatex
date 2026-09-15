@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# Create a standalone document from the template beside this script's bin/.
+set -euo pipefail
+
+usage() {
+    cat <<'EOF'
+Usage: newlatex -n NAME
+
+Create NAME.tex and its shared macros.tex.
+NAME may include a directory and an optional .tex suffix.
+The filename must start with a letter or digit and contain only letters,
+digits, dots, underscores, or hyphens. Directory names may contain spaces.
+Existing documents are never overwritten. Existing support files must match
+the template; otherwise choose another directory.
+
+Examples:
+  newlatex -n notes
+  newlatex -n papers/my-paper.tex
+EOF
+}
+
+fail() { printf 'newlatex: %s\n' "$*" >&2; exit 1; }
+
+name=''
+while getopts ':n:h' option; do
+    case "$option" in
+        n) [[ -z "$name" ]] || fail 'use -n only once'; name=$OPTARG ;;
+        h) usage; exit 0 ;;
+        :) fail "option -$OPTARG requires an argument" ;;
+        \?) fail "unknown option: -$OPTARG (see newlatex -h)" ;;
+    esac
+done
+shift "$((OPTIND - 1))"
+[[ $# -eq 0 ]] || fail 'unexpected positional argument (see newlatex -h)'
+[[ -n "$name" ]] || fail 'provide a name with -n (see newlatex -h)'
+[[ "$name" != */ ]] || fail 'the name must not end with a slash'
+
+directory=$(dirname -- "$name")
+stem=$(basename -- "$name")
+stem=${stem%.tex}
+[[ "$stem" =~ ^[a-zA-Z0-9][a-zA-Z0-9._-]*$ ]] || fail 'invalid filename (see newlatex -h)'
+[[ "$stem" != macros ]] || fail 'macros.tex is reserved for the shared preamble'
+target="$directory/$stem.tex"
+
+# Resolve the installed symlink so the project remains the template source.
+script_path=$(readlink -f -- "${BASH_SOURCE[0]}")
+template_dir=$(cd -- "$(dirname -- "$script_path")/.." && pwd -P)
+support_files=(macros.tex)
+for file in sample.tex "${support_files[@]}"; do
+    [[ -r "$template_dir/$file" ]] || fail "missing template: $template_dir/$file"
+done
+[[ ! -e "$target" && ! -L "$target" ]] || fail "already exists: $target"
+
+# Check every collision before creating anything.
+for file in "${support_files[@]}"; do
+    destination="$directory/$file"
+    if [[ -e "$destination" || -L "$destination" ]]; then
+        [[ -f "$destination" ]] && cmp -s -- "$template_dir/$file" "$destination" \
+            || fail "existing support file differs: $destination; choose another directory"
+    fi
+done
+
+mkdir -p -- "$directory"
+for file in "${support_files[@]}"; do
+    destination="$directory/$file"
+    if [[ ! -e "$destination" && ! -L "$destination" ]]; then
+        (set -o noclobber; cat -- "$template_dir/$file" > "$destination") \
+            || fail "could not create: $destination"
+    fi
+done
+(set -o noclobber; cat -- "$template_dir/sample.tex" > "$target") \
+    || fail "could not create: $target"
+printf 'Created %s\n' "$target"
+printf 'Compile: cd %q && latexmk -pdf %q\n' "$directory" "$stem.tex"

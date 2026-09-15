@@ -1,0 +1,65 @@
+\documentclass[11pt]{amsart}
+\input{macros.tex}
+% \shownotesfalse % Uncomment to hide all sidenotes.
+
+\title{A sample mathematical note}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+
+\begin{abstract}
+  A small example of shared macros, mathematical notation, and theorem
+  environments. Edit this file for the content and macros.tex for notation.
+\end{abstract}
+\maketitle
+\linenumbers % Comment out for a clean version.
+
+\section{Notation}
+We write $\N$, $\Z$, $\Q$, $\R$, and $\C$ for the usual number systems.
+\sidenote[Son]{Adjust the notation to match your paper.}
+Let $\cH$ be a real inner product space, with norm
+$\norm{u} = \sqrt{\ip{u}{u}}$.
+For example, a set and an automatically sized expression are
+\[
+  B \defeq \set{x \in \R \st \abs{x} < 1},
+  \qquad
+  \norm*{\frac{u+v}{2}} \leq \frac{\norm{u}+\norm{v}}{2}.
+\]
+For a random variable $X$, expectation, probability, and variance are
+written $\E X$, $\Prob\paren{X>0}$, and $\var(X)$.
+
+\section{A theorem and a proof}
+\begin{theorem}[Cauchy--Schwarz inequality]\label{thm:cs}
+  For all $u,v\in\cH$,
+  \begin{equation}\label{eq:cs}
+    \abs{\ip{u}{v}} \leq \norm{u}\,\norm{v}.
+  \end{equation}
+\end{theorem}
+\begin{proof}
+  If $v=0$, the claim is immediate. Otherwise, set
+  $t=\ip{u}{v}/\norm{v}^2$. Expanding a square gives
+  \[
+    0 \leq \norm{u-tv}^2
+      = \norm{u}^2-\frac{\abs{\ip{u}{v}}^2}{\norm{v}^2}.
+  \]
+  Rearranging proves~\eqref{eq:cs}.
+\end{proof}
+\begin{remark}
+  Theorem~\ref{thm:cs} illustrates labels and cross references.
+  Lemmas, propositions, corollaries, definitions, and examples are also
+  available and share the theorem counter within each section.
+\end{remark}
+
+\section{Calculus}
+The shared macros also cover derivatives and vector calculus:
+\[
+  \odv{}{t}\int_{\R} f(t,x)\,\dd x
+    = \int_{\R}\pdv{f}{t}(t,x)\,\dd x,
+  \qquad \lap u = \dv(\grad u).
+\]
+The displayed identity assumes enough regularity to differentiate under
+the integral. Higher derivatives use \verb|\pdv[2]{u}{x}|, giving
+$\pdv[2]{u}{x}$.
+
+\end{document}
